@@ -1,0 +1,33 @@
+{
+  "epochs": 5,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.4081030571746826,
+      "train_accuracy": 0.49706
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.1070429615783692,
+      "train_accuracy": 0.60546
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.9570726057815552,
+      "train_accuracy": 0.66266
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.8287174165344239,
+      "train_accuracy": 0.70804
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7103943451309204,
+      "train_accuracy": 0.74776
+    }
+  ],
+  "test_accuracy": 0.6497
+}

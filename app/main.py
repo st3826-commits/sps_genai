@@ -2,9 +2,11 @@ from fastapi import FastAPI, HTTPException
 import spacy
 from pydantic import BaseModel
 from app.bigram_model import BigramModel
+from app.cnn_api import router as cnn_router
 
 
 app = FastAPI()
+app.include_router(cnn_router)
 nlp = spacy.load("en_core_web_md")
 
 # Sample corpus for the bigram model

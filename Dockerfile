@@ -12,6 +12,7 @@ RUN uv pip install --python /code/.venv/bin/python \
 
 
 COPY app ./app
+COPY models ./models
 
 EXPOSE 8000
 
