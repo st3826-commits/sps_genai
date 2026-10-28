@@ -132,7 +132,7 @@ Example response:
 Classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck. Confidence is a softmax score, not a guarantee of correctness.
 Responses: **200** for successful prediction, **400** for an invalid image, **422** for a missing file. Prediction was verified in Docker.
 
-# Assignment 3: MNIST GAN
+# MNIST GAN
 
 ## Model Architecture
 
