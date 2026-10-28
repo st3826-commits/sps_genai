@@ -1,6 +1,7 @@
 # FastAPI Text Generation, Word Embeddings, and Image Models
 
 This project extends the class FastAPI application with word embeddings, CNN image classification, LSTM text generation, and Assignment 3 MNIST GAN image generation.
+GitHub repository: https://github.com/st3826-commits/sps_genai 
 
 ## Setup
 
