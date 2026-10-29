@@ -3,20 +3,37 @@ import torch
 from app.lstm_model import LSTMModel
 from app.lstm_model import generate_with_rnn as generate_rnn_text
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile, Query, Response
 import spacy
 from pydantic import BaseModel
 from app.bigram_model import BigramModel
-from app.cnn_api import router as cnn_router
-from app.gan_api import router as gan_router
-
+from app.cnn_api import classify_image as classify_image_handler
+from app.gan_api import generate_with_gan as generate_gan_handler
 
 
 
 
 app = FastAPI()
-app.include_router(gan_router)
-app.include_router(cnn_router)
+@app.post("/classify", tags=["Image classification"])
+def classify_image(file: UploadFile = File(...)):
+    return classify_image_handler(file=file)
+
+
+@app.get(
+    "/generate_with_gan",
+    tags=["GAN"],
+    response_class=Response,
+    responses={200: {"content": {"image/png": {}}}},
+)
+def generate_with_gan(
+    num_samples: int = Query(default=16, ge=1, le=64),
+    seed: int = Query(default=42, ge=0, le=2147483647),
+):
+    return generate_gan_handler(
+        num_samples=num_samples,
+        seed=seed,
+    )
+
 nlp = spacy.load("en_core_web_md")
 
 # Sample corpus for the bigram model
