@@ -9,8 +9,7 @@ from pydantic import BaseModel
 from app.bigram_model import BigramModel
 from app.cnn_api import classify_image as classify_image_handler
 from app.gan_api import generate_with_gan as generate_gan_handler
-
-
+from app.assignment4_api import generate_diffusion_png, generate_ebm_png
 
 
 app = FastAPI()
@@ -165,3 +164,39 @@ rnn_model = LSTMModel(
 rnn_model.load_state_dict(checkpoint["model_state_dict"])
 rnn_model.eval()
 
+@app.get(
+    "/generate_with_diffusion",
+    tags=["Diffusion"],
+    response_class=Response,
+    responses={200: {"content": {"image/png": {}}}},
+)
+def generate_with_diffusion(
+    num_samples: int = Query(default=5, ge=1, le=16),
+    seed: int = Query(default=42, ge=0, le=2147483647),
+    diffusion_steps: int = Query(default=100, ge=1, le=200)
+):
+    png = generate_diffusion_png(
+        num_samples=num_samples,
+        seed=seed,
+        diffusion_steps=diffusion_steps
+    )
+    return Response(content=png, media_type="image/png")
+
+
+@app.get(
+    "/generate_with_ebm",
+    tags=["EBM"],
+    response_class=Response,
+    responses={200: {"content": {"image/png": {}}}},
+)
+def generate_with_ebm(
+    num_samples: int = Query(default=5, ge=1, le=16),
+    seed: int = Query(default=42, ge=0, le=2147483647),
+    sampling_steps: int = Query(default=100, ge=1, le=200)
+):
+    png = generate_ebm_png(
+        num_samples=num_samples,
+        seed=seed,
+        sampling_steps=sampling_steps
+    )
+    return Response(content=png, media_type="image/png")

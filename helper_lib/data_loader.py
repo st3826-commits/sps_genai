@@ -110,3 +110,26 @@ def get_mnist_gan_data_loader(data_dir, batch_size=64):
         shuffle=True,
         num_workers=0,
     )
+## Assignment 4:
+def get_assignment4_data_loader(
+    data_dir="./data",
+    batch_size=32,
+    train=True
+):
+    transform = transforms.Compose([
+        transforms.ToTensor()
+    ])
+
+    dataset = datasets.CIFAR10(
+        root=data_dir,
+        train=train,
+        download=True,
+        transform=transform
+    )
+
+    return DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=train,
+        num_workers=0
+    )

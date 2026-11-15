@@ -215,6 +215,48 @@ convergence or image quality. No quantitative generation-quality score is report
 
 ![GAN training loss](assignment3_results/training_loss.png)
 
+
+
+## Diffusion and Energy-Based Image Generation
+
+Both models were trained on the 50,000-image CIFAR-10 training
+set for one epoch. The training code and outputs are included
+in `assignment4_test.ipynb`.
+
+The diffusion model predicts noise using a UNet and generates
+images through reverse diffusion. The energy model uses
+Langevin sampling with gradients computed with respect to
+input images while keeping model parameters fixed.
+
+Generated samples remain blurry or noisy after this limited
+training; they do not yet show consistently recognizable objects.
+
+### Run with Docker
+
+From the repository root:
+
+```bash
+docker build -t sps-genai:diffusion-ebm .
+docker run --rm -p 8009:8000 sps-genai:diffusion-ebm
+```
+
+Open http://127.0.0.1:8009/docs.
+
+### Endpoints
+
+Both endpoints return a PNG image grid and run inference on CPU
+using the included checkpoints, without retraining.
+
+- GET `/generate_with_diffusion`
+  - `num_samples`: 1–16, default 5
+  - `seed`: default 42
+  - `diffusion_steps`: 1–200, default 100
+- GET `/generate_with_ebm`
+  - `num_samples`: 1–16, default 5
+  - `seed`: default 42
+  - `sampling_steps`: 1–200, default 100
+
+
 # Files
 
 
