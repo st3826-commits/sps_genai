@@ -542,10 +542,17 @@ class DiffusionModel(nn.Module):
         return loss.item()
 
     def plot_images(self, epoch=None, logs=None, num_rows=3, num_cols=6):
-        # plot random generated images for visual evaluation of generation quality
+        import matplotlib.pyplot as plt
+        from torchvision.utils import make_grid
+
         generated_images = self.generate(
             num_images=num_rows * num_cols,
-            image_size=IMAGE_SIZE,
-            diffusion_steps=20,
-        ).cpu()
-        show_image(generated_images[0])
+            image_size=self.network.image_size,
+            diffusion_steps=20).cpu()
+
+        grid = make_grid(generated_images, nrow=num_cols)
+        plt.figure(figsize=(num_cols * 2, num_rows * 2))
+        plt.imshow(grid.permute(1, 2, 0).numpy())
+        plt.axis("off")
+        plt.tight_layout()
+        plt.show()
